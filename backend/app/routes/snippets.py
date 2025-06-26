@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
-from app.schemas import SnippetCreate, Snippet
-from app import crud, db
+from app.schemas.schemas import SnippetCreate, Snippet
+from app.services import crud
+from app.db import db
 
 router = APIRouter()
 

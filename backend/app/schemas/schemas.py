@@ -25,4 +25,4 @@ class Snippet(SnippetBase):
 
     # This is used to return a list of snippets, allows ORM objects 
     class Config:
-        orm_mode = True
+        from_attributes = True

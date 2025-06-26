@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from app import models, schemas
+from app.db import models
+from app.schemas import schemas
 from typing import List
 from uuid import UUID
 
