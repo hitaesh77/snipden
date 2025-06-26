@@ -34,3 +34,8 @@ node_modules/
 dist/
 build/
 .next/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
