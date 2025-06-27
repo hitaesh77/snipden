@@ -20,7 +20,7 @@ class SnippetCreate(SnippetBase):
 # server response
 class Snippet(SnippetBase):
     id: UUID
-    user_id: UUID
+    #user_id: UUID
     created_at: datetime
 
     # This is used to return a list of snippets, allows ORM objects 
