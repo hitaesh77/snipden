@@ -28,12 +28,12 @@ import {
 const items = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "My Snippets",
-    url: "#",
+    url: "/snippets",
     icon: FileCode,
   },
   {
