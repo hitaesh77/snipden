@@ -14,7 +14,6 @@ import {
   SidebarGroup,
   SidebarMenu,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
@@ -63,9 +62,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarGroupLabel className="text-black font-intra mt-2 ml-1 font-bold text-3xl">
+        <Link
+          href="/"
+          className="text-black font-intra mt-2 ml-1 font-bold text-3xl"
+        >
           SnipDen
-        </SidebarGroupLabel>
+        </Link>
         <div className="border-b border-gray-300 mt-2"></div>
       </SidebarHeader>
       <SidebarContent className="mt-0">

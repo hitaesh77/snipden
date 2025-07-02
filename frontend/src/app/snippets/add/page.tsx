@@ -15,7 +15,7 @@ export default function AddSnippetPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/snippets`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/snippets/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -26,7 +26,6 @@ export default function AddSnippetPage() {
         summary,
       }),
     });
-
     // Optional: show toast, redirect, etc.
   };
 

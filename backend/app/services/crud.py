@@ -32,3 +32,14 @@ def create_snippet(db: Session, snippet: schemas.SnippetCreate):
     db.commit()
     db.refresh(db_snippet)
     return db_snippet
+
+def update_snippet(db: Session, snippet_id: UUID, snippet: schemas.SnippetBase):
+    db_snippet = db.query(models.Snippet).filter(models.Snippet.id == snippet_id).first()
+    db_snippet.title = snippet.title
+    db_snippet.code = snippet.code
+    db_snippet.language = snippet.language
+    db_snippet.summary = snippet.summary
+    db_snippet.tags = snippet.tags
+    db.commit()
+    db.refresh(db_snippet)
+    return db_snippet
