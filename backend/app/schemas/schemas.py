@@ -9,7 +9,7 @@ class SnippetBase(BaseModel):
     code: str
     language: str
     summary: Optional[str] = None
-    tags: List[str] = []
+    tags: list[str]
 
 # client POST request, inherits from SnippetBase
 # pass means it has the same fields as SnippetBase

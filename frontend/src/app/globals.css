@@ -120,3 +120,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.navbar-text {
+  font-size: 10rem; /* Adjust to your desired size */
+  font-weight: bold; /* Optional */
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+.font-firacode {
+  font-family: "Fira Code", monospace;
+}
