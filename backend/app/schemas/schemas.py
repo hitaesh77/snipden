@@ -8,8 +8,6 @@ class SnippetBase(BaseModel):
     title: str
     code: str
     language: str
-    summary: Optional[str] = None
-    tags: list[str]
 
 # client POST request, inherits from SnippetBase
 # pass means it has the same fields as SnippetBase
@@ -22,6 +20,8 @@ class Snippet(SnippetBase):
     id: UUID
     #user_id: UUID
     created_at: datetime
+    summary: Optional[str] = None
+    tags: list[str]
 
     # This is used to return a list of snippets, allows ORM objects 
     class Config:

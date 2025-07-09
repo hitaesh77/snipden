@@ -4,6 +4,7 @@ from uuid import UUID
 from app.schemas.schemas import SnippetCreate, SnippetBase, Snippet
 from app.services import crud
 from app.db import db, models
+from fastapi import Query
 
 router = APIRouter()
 
@@ -30,6 +31,13 @@ def delete_snippet(snippet_id: UUID, db: Session = Depends(db.get_db)):
     db.delete(db_snippet)
     db.commit()
     return True
+
+@router.post("/snippets/search", response_model=list[Snippet])
+def search_snippets(
+    query: str = Query(..., description="Natural language search query"),
+    db: Session = Depends(db.get_db)
+):
+    return crud.search_snippets(db=db, query=query)
     
 '''
 @router.post("/snippets/", response_model=Snippet)
