@@ -28,9 +28,9 @@ def create_snippet(db: Session, snippet: schemas.SnippetCreate):
         title=snippet.title,
         code=snippet.code,
         language=snippet.language,
-        embedding = generate_embedding(snippet.code),
         summary=summary_tags["summary"],
-        tags=summary_tags["tags"]
+        tags=summary_tags["tags"],
+        embedding = generate_embedding(snippet.code, summary_tags["summary"], summary_tags["tags"])
     )
     db.add(db_snippet)
     db.commit()
