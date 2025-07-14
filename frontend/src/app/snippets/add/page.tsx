@@ -116,7 +116,7 @@ export default function AddSnippetPage() {
             <div className="flex-2 space-y-8">
               {generatedTags && (
                 <div>
-                  <label className="block text-sm font-intra mb-1 px-2 text-gray-600">
+                  <label className="block text-2xl font-intra mb-1 px-2 text-gray-600">
                     Generated Tags
                   </label>
                   <div className="p-3 bg-gray-50 rounded border text-sm">
@@ -132,7 +132,7 @@ export default function AddSnippetPage() {
 
               {generatedSummary && (
                 <div>
-                  <label className="block text-sm font-intra mb-1 px-2 text-gray-600">
+                  <label className="block text-2xl font-intra mb-1 px-2 text-gray-600">
                     Generated Summary
                   </label>
                   <div className="p-3 bg-gray-50 rounded border text-sm">
