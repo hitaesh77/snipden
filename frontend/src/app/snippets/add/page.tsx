@@ -54,6 +54,18 @@ export default function AddSnippetPage() {
     }
   };
 
+  // Helper function to process tags into an array
+  const getTagsArray = () => {
+    if (!generatedTags) return [];
+    if (Array.isArray(generatedTags)) {
+      return generatedTags;
+    }
+    return generatedTags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="w-full max-w-8xl space-y-12 p-8">
@@ -71,10 +83,7 @@ export default function AddSnippetPage() {
                 className="!text-base"
               />
             </div>
-            <div className="flex-2">
-              <label className="block text-2xl font-intra mb-2 px-2">
-                Generate
-              </label>
+            <div className="flex-2 mt-10">
               <Button
                 type="button"
                 onClick={handleGenerateTagsAndSummary}
@@ -113,30 +122,46 @@ export default function AddSnippetPage() {
                 }}
               />
             </div>
-            <div className="flex-2 space-y-8">
+            <div className="flex-2 space-y-5">
+              {/* Separate box for tags */}
               {generatedTags && (
-                <div>
-                  <label className="block text-2xl font-intra mb-1 px-2 text-gray-600">
+                <div className="p-4 rounded-lg border">
+                  <label className="block text-lg font-intra mb-3 text-black">
                     Generated Tags
                   </label>
-                  <div className="p-3 bg-gray-50 rounded border text-sm">
-                    {Array.isArray(generatedTags)
-                      ? generatedTags.join(", ")
-                      : generatedTags
-                          .split(",")
-                          .map((tag) => tag.trim())
-                          .join(", ")}
+                  <div className="flex flex-wrap gap-2">
+                    {getTagsArray().map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 mb-2 text-black text-sm rounded-full border border-gray-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
 
+              {/* Separate box for summary */}
               {generatedSummary && (
-                <div>
-                  <label className="block text-2xl font-intra mb-1 px-2 text-gray-600">
+                <div className="p-4 rounded-lg border h-104">
+                  <label className="block text-lg font-intra mb-3 text-black">
                     Generated Summary
                   </label>
-                  <div className="p-3 bg-gray-50 rounded border text-sm">
+                  <div className="p-3 bg-white rounded border text-sm mb-2">
                     {generatedSummary}
+                  </div>
+                </div>
+              )}
+
+              {/* Placeholder when nothing is generated */}
+              {!generatedTags && !generatedSummary && (
+                <div className="p-4 rounded-lg border h-138 bg-gray-50">
+                  <div className="h-full text-gray-500">
+                    <p className="text-base">
+                      Generated tags and summary will appear here after clicking
+                      &quot;Generate Tags and Summary&quot;
+                    </p>
                   </div>
                 </div>
               )}
