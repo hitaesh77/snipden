@@ -156,7 +156,7 @@ export default function AddSnippetPage() {
 
               {/* Placeholder when nothing is generated */}
               {!generatedTags && !generatedSummary && (
-                <div className="p-4 rounded-lg border h-138 bg-gray-50">
+                <div className="p-4 rounded-lg border h-138">
                   <div className="h-full text-gray-500">
                     <p className="text-base">
                       Generated tags and summary will appear here after clicking
