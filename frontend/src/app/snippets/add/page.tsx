@@ -9,12 +9,11 @@ export default function AddSnippetPage() {
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("");
-  const [tags, setTags] = useState("");
-  const [summary, setSummary] = useState("");
+  const [generatedTags, setGeneratedTags] = useState("");
+  const [generatedSummary, setGeneratedSummary] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/snippets/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,18 +21,44 @@ export default function AddSnippetPage() {
         title,
         code,
         language,
-        tags: tags.split(",").map((t) => t.trim()),
-        summary,
+        tags: generatedTags,
+        summary: generatedSummary,
       }),
     });
     // Optional: show toast, redirect, etc.
+  };
+
+  const handleGenerateTagsAndSummary = async () => {
+    setIsGenerating(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/snippets/generate_tags_summary`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            code,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setGeneratedTags(data.tags || "");
+        setGeneratedSummary(data.summary || "");
+      }
+    } catch (error) {
+      console.error("Error generating tags and summary:", error);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="w-full max-w-8xl space-y-12 p-8">
         <h1 className="text-5xl font-bold font-intra">Add New Snippet</h1>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="space-y-8">
           <div className="flex gap-8">
             <div className="flex-3">
               <label className="block text-2xl font-intra mb-2 px-2">
@@ -48,19 +73,31 @@ export default function AddSnippetPage() {
             </div>
             <div className="flex-2">
               <label className="block text-2xl font-intra mb-2 px-2">
+                Generate
+              </label>
+              <Button
+                type="button"
+                onClick={handleGenerateTagsAndSummary}
+                disabled={isGenerating || !code.trim()}
+                className="bg-black text-white font-intra w-full text-2xl hover:bg-gray-600"
+              >
+                {isGenerating ? "Generating..." : "Generate Tags and Summary"}
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex gap-8">
+            <div className="flex-3">
+              <label className="block text-2xl font-intra mb-2 px-2">
                 Language
               </label>
               <Input
                 placeholder="e.g. JavaScript"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
-                className="!text-base"
+                className="!text-base mb-8"
               />
-            </div>
-          </div>
 
-          <div className="flex gap-8">
-            <div className="flex-3">
               <label className="block text-2xl font-intra mb-2 px-2">
                 Snippet Code
               </label>
@@ -69,7 +106,7 @@ export default function AddSnippetPage() {
                 rows={12}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full h-136 !text-base"
+                className="w-full h-114 !text-base"
                 style={{
                   fontFamily: 'Consolas, Monaco, "Courier New", monospace',
                   fontFeatureSettings: "normal",
@@ -77,32 +114,37 @@ export default function AddSnippetPage() {
               />
             </div>
             <div className="flex-2 space-y-8">
-              <div>
-                <label className="block text-2xl font-intra mb-2 px-2">
-                  Snippet Tags
-                </label>
-                <Input
-                  placeholder="Add tags here (comma separated)"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                  className="!text-base"
-                />
-              </div>
-              <div>
-                <label className="block text-2xl font-intra mb-2 px-2">
-                  Summary
-                </label>
-                <Textarea
-                  placeholder="Optional summary of the code snippet..."
-                  rows={8}
-                  value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
-                  className="h-92 !text-base"
-                />
-              </div>
+              {generatedTags && (
+                <div>
+                  <label className="block text-sm font-intra mb-1 px-2 text-gray-600">
+                    Generated Tags
+                  </label>
+                  <div className="p-3 bg-gray-50 rounded border text-sm">
+                    {Array.isArray(generatedTags)
+                      ? generatedTags.join(", ")
+                      : generatedTags
+                          .split(",")
+                          .map((tag) => tag.trim())
+                          .join(", ")}
+                  </div>
+                </div>
+              )}
+
+              {generatedSummary && (
+                <div>
+                  <label className="block text-sm font-intra mb-1 px-2 text-gray-600">
+                    Generated Summary
+                  </label>
+                  <div className="p-3 bg-gray-50 rounded border text-sm">
+                    {generatedSummary}
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-end">
                 <Button
-                  type="submit"
+                  type="button"
+                  onClick={handleSubmit}
                   className="bg-black text-white font-intra w-full text-2xl hover:bg-gray-600"
                 >
                   Save Snippet
@@ -110,7 +152,7 @@ export default function AddSnippetPage() {
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

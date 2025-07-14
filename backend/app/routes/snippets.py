@@ -12,6 +12,10 @@ router = APIRouter()
 def create_snippet(snippet: SnippetCreate, db: Session = Depends(db.get_db)):
     return crud.create_snippet(db=db, snippet=snippet)
 
+@router.post("/snippets/generate_tags_summary", response_model=dict)
+def generate_tags_summary(request: dict):
+    return crud.generate_tags_summary(request)
+
 @router.get("/snippets", response_model=list[Snippet])
 def get_snippets(db: Session = Depends(db.get_db)):
     return db.query(models.Snippet).all()

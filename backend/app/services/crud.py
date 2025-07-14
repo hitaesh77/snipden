@@ -23,19 +23,28 @@ def create_snippet(db: Session, snippet: schemas.SnippetCreate, user_id: UUID):
 '''
 
 def create_snippet(db: Session, snippet: schemas.SnippetCreate):
-    summary_tags = summarize_and_tag(snippet.code)
+    'summary_tags = summarize_and_tag(snippet.code)'
     db_snippet = models.Snippet(
         title=snippet.title,
         code=snippet.code,
         language=snippet.language,
-        summary=summary_tags["summary"],
-        tags=summary_tags["tags"],
-        embedding = generate_embedding(snippet.code, summary_tags["summary"], summary_tags["tags"])
+        summary=snippet.summary,
+        tags=snippet.tags,
+        embedding = generate_embedding(snippet.code, snippet.summary, snippet.tags)
     )
     db.add(db_snippet)
     db.commit()
     db.refresh(db_snippet)
     return db_snippet
+
+def generate_tags_summary(request: dict):
+    code = request.get("code", "")
+    summary_tags = summarize_and_tag(code)
+    return {
+        "tags": summary_tags["tags"],
+        "summary": summary_tags["summary"]
+    }
+
 
 def update_snippet(db: Session, snippet_id: UUID, snippet: schemas.SnippetBase):
     db_snippet = db.query(models.Snippet).filter(models.Snippet.id == snippet_id).first()

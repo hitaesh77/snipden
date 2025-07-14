@@ -8,6 +8,8 @@ class SnippetBase(BaseModel):
     title: str
     code: str
     language: str
+    tags: list[str]
+    summary: str
 
 # client POST request, inherits from SnippetBase
 # pass means it has the same fields as SnippetBase
