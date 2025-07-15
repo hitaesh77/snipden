@@ -56,21 +56,22 @@ const data = {
   },
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  onCollapseChange?: (collapsed: boolean) => void;
+}) {
   const pathname = usePathname();
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <Link
-          href="/"
-          className="text-black font-intra mt-2 ml-1 font-bold text-3xl"
-        >
-          SnipDen
-        </Link>
-        <div className="border-b border-gray-300 mt-2"></div>
-      </SidebarHeader>
       <SidebarContent className="mt-0">
+        <SidebarHeader className="text-black font-intra mt-2 ml-1 font-bold text-3xl">
+          <Link href="/" className="w-full">
+            SnipDen
+          </Link>
+          <div className="border-b border-gray-300 mt-2"></div>
+        </SidebarHeader>
         <SidebarGroup>
           {/*}
           <SidebarGroupLabel className="text-base">
