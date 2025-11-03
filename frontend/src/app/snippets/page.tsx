@@ -150,7 +150,7 @@ export default function AllSnippetsPage() {
                   key={lang}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 cursor-pointer transition-all ${
                     selectedLanguages.includes(lang)
-                      ? "border-gray-600 bg-gray-200"
+                      ? "border-gray-500 bg-gray-200"
                       : "border-gray-300 hover:border-gray-400"
                   }`}
                 >
@@ -173,7 +173,7 @@ export default function AllSnippetsPage() {
               <label
                 className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 cursor-pointer transition-all ${
                   sortOrder === "newest"
-                    ? "border-gray-600 bg-gray-200"
+                    ? "border-gray-500 bg-gray-200"
                     : "border-gray-300 hover:border-gray-400"
                 }`}
               >
@@ -190,7 +190,7 @@ export default function AllSnippetsPage() {
               <label
                 className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 cursor-pointer transition-all ${
                   sortOrder === "oldest"
-                    ? "border-gray-600 bg-gray-200"
+                    ? "border-gray-500 bg-gray-200"
                     : "border-gray-300 hover:border-gray-400"
                 }`}
               >
