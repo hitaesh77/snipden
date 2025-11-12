@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Home, FileCode, Plus, Search, Settings } from "lucide-react";
+import { FileCode, Plus, Search, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavUser } from "@/components/nav-user";
@@ -21,9 +21,9 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Dashboard",
+    title: "Search Snippets",
     url: "/",
-    icon: Home,
+    icon: Search,
   },
   {
     title: "My Snippets",
@@ -34,11 +34,6 @@ const items = [
     title: "Add Snippet",
     url: "/snippets/add",
     icon: Plus,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
   },
   {
     title: "Settings",
