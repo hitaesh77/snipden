@@ -1,7 +1,7 @@
 import os
 from app.db.db import engine
 from app.db import models
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 sync_db_url = os.getenv("DATABASE_URL_SYNC")
 
@@ -9,6 +9,9 @@ def init_db():
     sync_engine = create_engine(sync_db_url)
 
     try:
+        with sync_engine.begin() as conn:
+            conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+            
         models.Base.metadata.create_all(bind=sync_engine)
     except Exception as e:
         print(f"Error creating tables: {e}")

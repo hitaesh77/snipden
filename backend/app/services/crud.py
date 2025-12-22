@@ -3,7 +3,7 @@ from app.db import models
 from app.schemas import schemas
 from typing import List
 from uuid import UUID
-from app.services.openai_utils import summarize_and_tag, generate_embedding
+from app.services.openai_utils import summarize_and_tag, generate_embedding, generate_search_embedding
 from sqlalchemy import text
 
 '''
@@ -58,7 +58,7 @@ def update_snippet(db: Session, snippet_id: UUID, snippet: schemas.SnippetBase):
     return db_snippet
 
 def search_snippets(db: Session, query: str, limit: int = 5):
-    query_embedding = generate_embedding(query)
+    query_embedding = generate_search_embedding(query)
 
     sql = text("""
         SELECT * FROM snippets
